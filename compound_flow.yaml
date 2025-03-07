@@ -1,0 +1,44 @@
+# version format ex. "0.0.1"
+version: "1.0.0"
+
+# Basic metadata for the agent
+metadata:
+  name: "textemoji"
+  description: "add emoji to places where possible"
+  author: "kdharsh24" # This username should match your account username
+  tags: [dyslexic, pdf, toText] # Tags are keywords used to categorize your flow
+  private: false # Access control for your flows (true/false)
+
+# Define the input variables required
+inputs:
+  topic:
+    type: string #Currently we only support String format
+    description: "Pdf Text"
+    required: true
+    example: "King of waters"
+  text:
+    type: string
+    description: "Write your Story"
+    required: true
+    example: "The king of waters is the river the god aquaman"
+
+# LLM configuration
+model:
+  provider: "openai" # e.g., anthropic, openai, meta, etc.
+  name: "gpt-4o"
+
+# For supported LLM models, refer to the documentation: https://docs.mira.network/sdk/core-concepts
+
+# # Dataset configuration (Optional)
+# dataset:
+#   source: "author_name/dataset_name" # Make sure this data set exists
+
+# Prompt template configuration
+prompt: |
+  Convert this texts to readable with emojis for ADHD and Dyslexic people.
+  {text} 
+  return only the text beautifully.
+
+# ReadME configuration
+readme: |
+  Give Image based text and text to convert to emoji
