@@ -1,0 +1,32 @@
+version: "1.0.0"
+
+metadata:
+  name: "textsummarizer"
+  description: "Summarizes text in a concise manner"
+  author: "kdharsh24"
+  tags: [summarization, text, NLP]
+  private: false
+
+inputs:
+  topic:
+    type: string
+    description: "Topic of the text"
+    required: true
+    example: "Climate Change"
+  text:
+    type: string
+    description: "Text to summarize"
+    required: true
+    example: "Climate change refers to long-term shifts in temperatures and weather patterns."
+
+model:
+  provider: "openai"
+  name: "gpt-4o"
+
+prompt: |
+  Summarize the following text in a concise and meaningful way:
+  {text}
+  Return only the summarized version without additional explanations.
+
+readme: |
+  This flow takes in long-form text and provides a summarized version, making it easier to grasp the core ideas quickly.

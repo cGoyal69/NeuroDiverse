@@ -1,20 +1,21 @@
 import os
-from flask import Flask, request, send_file, jsonify
-import tempfile
+import json
+from flask import Flask, request, jsonify
 from weasyprint import HTML
 from weasyprint.text.fonts import FontConfiguration
+from gptRun import gptResponse
 
 app = Flask(__name__)
 
+# Paths
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))  # Current script directory
+TEXT_JSON_FILE = os.path.join(BASE_DIR, "text.json")  # Path to text.json
+OUTPUT_DIR = os.path.join(BASE_DIR, "pdf_output")  # Output directory
+os.makedirs(OUTPUT_DIR, exist_ok=True)  # Ensure output directory exists
+
 # Font paths
-FONT_PATH_TEXT = "OpenDyslexic3-Regular.ttf"
-FONT_PATH_EMOJI = "NotoColorEmoji-Regular.ttf"
-
-# Output directory for PDFs
-OUTPUT_DIR = "pdf_output"
-
-# Ensure the output directory exists
-os.makedirs(OUTPUT_DIR, exist_ok=True)
+FONT_PATH_TEXT = os.path.join(BASE_DIR, "OpenDyslexic3-Regular.ttf")
+FONT_PATH_EMOJI = os.path.join(BASE_DIR, "NotoColorEmoji-Regular.ttf")
 
 # Check if fonts exist
 if not os.path.exists(FONT_PATH_TEXT):
@@ -27,8 +28,25 @@ if not os.path.exists(FONT_PATH_EMOJI):
 FONT_PATH_TEXT_ABS = os.path.abspath(FONT_PATH_TEXT)
 FONT_PATH_EMOJI_ABS = os.path.abspath(FONT_PATH_EMOJI)
 
+def read_text_from_json():
+    """Read extracted text from text.json and return the 'text' key content."""
+    if not os.path.exists(TEXT_JSON_FILE):
+        raise FileNotFoundError("text.json not found in the directory.")
+
+    with open(TEXT_JSON_FILE, "r", encoding="utf-8") as json_file:
+        try:
+            data = json.load(json_file)  # Load JSON content
+        except json.JSONDecodeError:
+            raise ValueError("text.json is corrupted or empty.")
+
+    # Ensure 'text' key exists in JSON
+    if "text" not in data:
+        raise KeyError("'text' key not found in text.json.")
+
+    return data["text"]  # Return the extracted text
+
 def create_pdf_with_html(text, output_filename):
-    """Generate a PDF with proper emoji support using WeasyPrint"""
+    """Generate a PDF with proper emoji support using WeasyPrint."""
     
     # Create HTML with embedded font face definitions
     html_content = f"""
@@ -54,9 +72,9 @@ def create_pdf_with_html(text, output_filename):
             body {{
                 font-family: 'OpenDyslexic', 'NotoEmoji', sans-serif;
                 font-size: 30px;
-                line-height: 2; /* Increased line spacing */
-                word-spacing: 5px; /* Increased word spacing */
-                letter-spacing: 1.5px; /* Increased character spacing */
+                line-height: 2;
+                word-spacing: 5px;
+                letter-spacing: 1.5px;
                 margin: 50px;
             }}
             
@@ -95,25 +113,25 @@ def create_pdf_with_html(text, output_filename):
 @app.route('/generate_pdf', methods=['POST'])
 def generate_pdf():
     """API endpoint to generate a PDF with custom font and emoji support."""
-    data = request.get_json()
+    try:
+        # Read text from text.json
+        Text = read_text_from_json()
+        text = gptResponse(Text)
 
-    if not data or "text" not in data:
-        return jsonify({"error": "Missing 'text' parameter in request"}), 400
+        # Generate output file path
+        output_pdf = os.path.join(OUTPUT_DIR, "dyslexic_friendly.pdf")
 
-    text = data["text"]
-    
-    # Generate output file path
-    output_pdf = os.path.join(OUTPUT_DIR, "dyslexic_friendly.pdf")
+        # Generate PDF
+        create_pdf_with_html(text, output_pdf)
 
-    # Generate PDF
-    create_pdf_with_html(text, output_pdf)
+        # Return file path in response
+        return jsonify({
+            "message": "PDF generated successfully.",
+            "file_path": os.path.abspath(output_pdf)
+        })
 
-    # Return file path in response
-    return jsonify({
-        "message": "PDF generated successfully.",
-        "file_path": os.path.abspath(output_pdf)
-    })
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5001, debug=True)
-
