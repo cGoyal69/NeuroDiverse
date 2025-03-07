@@ -10,13 +10,11 @@ api_key = os.getenv("API_KEY")
 # Initialize the client
 client = MiraClient(config={"API_KEY": api_key})
 
-flow = Flow(source="compound_flow.yaml")
+emoji_flow = Flow(source="emoji_flow.yaml")
 
 def gptResponse(text):
     input_dict = {"topic": "Story", "text": text}
 
-    response = client.flow.test(flow, input_dict)
-    print(response['result'])
+    response = client.flow.test(emoji_flow, input_dict)
+    #print(response['result'])
     return response['result']
-
-gptResponse()
