@@ -1,0 +1,227 @@
+@font-face {
+    font-family: "OpenDyslexic";
+    src: url('../font//OpenDyslexic3-Regular.ttf') format("truetype");
+}
+
+* {
+    font-family: "OpenDyslexic", Arial, sans-serif;
+    letter-spacing: 0.05em;
+}
+
+.container {
+    min-width: 90%;
+    min-height: 90%;
+    max-height: fit-content;
+    margin: auto;
+    background: #fafafa;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.title {
+    font-size: 2rem;
+    text-align: center;
+    color: #222;
+}
+
+.upload-section,
+.option-section {
+    margin-bottom: 20px;
+}
+
+.label {
+    font-size: 1.2rem;
+    color: #444;
+    font-weight: bold;
+}
+
+.drop-area {
+    padding: 20px;
+    border: 2px dashed #666;
+    border-radius: 8px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.drop-area:hover,
+.drag-active {
+    border-color: #007bff;
+    background: #e3f2fd;
+}
+
+.upload-icon {
+    color: #666;
+    margin-bottom: 10px;
+}
+
+.drop-text {
+    font-size: 1rem;
+    color: #444;
+}
+
+.highlight {
+    color: #007bff;
+    font-weight: bold;
+}
+
+.selected-file {
+    font-size: 1rem;
+    color: #28a745;
+    font-weight: bold;
+}
+
+.options {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.radio-label {
+    font-size: 1.1rem;
+    cursor: pointer;
+}
+
+.submit-btn {
+    width: 100%;
+    background: #007bff;
+    color: white;
+    padding: 12px;
+    font-size: 1.2rem;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.submit-btn:hover {
+    background: #0056b3;
+}
+
+.output-section {
+    margin-top: 20px;
+    padding: 15px;
+    background: #f0f0f0;
+    border-radius: 8px;
+}
+
+.output-textarea {
+    width: 100%;
+    min-height: 150px;
+    font-size: 1.1rem;
+    padding: 10px;
+    border-radius: 8px;
+    background: #fff;
+    resize: none;
+    overflow-y: hidden;
+}
+
+.output-textarea:focus,
+.output-textarea:active {
+    outline: none;
+}
+
+.error-text {
+    color: red;
+    font-size: 1.1rem;
+} 
+
+.button-group {
+    display: flex;
+    justify-content: center;
+    gap: 15px; /* Spacing between buttons */
+    margin-top: 20px;
+}
+
+.convert-btn{
+    background-color: rgba(0, 166, 255, 0.395);
+    margin-left: 10px;
+    margin-right: 10px;
+    padding: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+    border-radius: 10px;
+}
+
+.convert-btn:hover {
+    background: #007db383;
+    transform: scale(1.05);
+}
+
+.convert-btn:active {
+    transform: scale(1.05);
+}
+
+.game-container {
+    text-align: center;
+    font-family: 'OpenDyslexic', Arial, sans-serif;
+    margin: 20px;
+}
+
+.game-title {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.game-content {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.icon-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out;
+}
+
+.icon-button:hover {
+    transform: scale(1.1);
+}
+
+.audio-icon {
+    color: #007bff;
+}
+
+.text-icon {
+    color: #28a745;
+}
+
+/* Modal */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    width: 60%;
+    text-align: center;
+}
+
+.close-button {
+    background: red;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    float: right;
+}
+
+.dyslexic-text {
+    font-family: 'OpenDyslexic', Arial, sans-serif;
+    font-size: 18px;
+    line-height: 1.5;
+}

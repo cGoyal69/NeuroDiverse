@@ -1,0 +1,62 @@
+*{
+    margin:0px;
+    padding:0px;
+}
+
+.adhdInput
+{
+    height:100vh;
+    width:100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color:rgb(240, 206, 164);
+}
+
+.adhdInputForm
+{
+    display:flex;
+    flex-direction: column;
+    border:1px solid black;
+    background-color: rgb(235, 235, 208);
+    padding:20px;
+}
+
+.adhdInputForm label,input,button
+{
+    margin-top:10px;
+}
+
+
+.adhdLearningMainTag
+{
+
+}
+
+
+.adhdLearning
+{
+    display: flex;
+    flex-direction:column;
+    align-items: center;
+    background-color:rgb(209, 207, 157);
+    height:auto;
+}
+
+.adhdLearning h4
+{
+    margin-bottom:10px;
+}
+
+
+#helperButtonAdhdLearning
+{
+    text-align: center;
+    width:100vw;
+    padding:10px;
+    position:absolute;
+    bottom:0px;
+}
+
+
+
